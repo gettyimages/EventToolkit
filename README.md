@@ -1,4 +1,3 @@
-
 # DomainToolkit
 
 Succinct, dependency-free, ioc-friendly utilities for working with a domain-centric design paradigm.
@@ -32,7 +31,7 @@ Domain Events aid decoupling and separation of concerns.
 
 ## Thanks
 
-* [Udi Dihan](http://www.udidahan.com) who introduced me to [Domain Events](http://www.udidahan.com/2009/06/14/domain-events-salvation/)
+* [Udi Dahan](http://www.udidahan.com) who introduced me to [Domain Events](http://www.udidahan.com/2009/06/14/domain-events-salvation/)
 * [Jimmy Bogard](http://lostechies.com/jimmybogard) for a tactical [introduction to Domain Events](http://lostechies.com/jimmybogard/2010/04/08/strengthening-your-domain-domain-events/)
 * [sapiens](http://github.com/sapiens) for [DomainEventsToolkit](http://github.com/sapiens/DomainEventsToolkit),
   the inspiration for DomainToolkit.
