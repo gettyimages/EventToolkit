@@ -1,0 +1,14 @@
+[Oo]bj
+[Bb]in
+*.user
+*.userprefs
+*.suo
+.DS_Store
+
+_ReSharper.*
+*crunch*
+
+packages/
+
+!*.proj
+!*.config
