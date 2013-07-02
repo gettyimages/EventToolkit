@@ -1,26 +1,34 @@
 require 'rubygems'
 require 'rake'
 
-ROOT = File.expand_path(File.dirname(__FILE__))
 WINDOWS = ENV['OS'] == 'Windows_NT'
-MSPEC_PATH = File.join(ROOT, 'packages/Machine.Specifications.0.5.12/tools/mspec.exe')
+ROOT = File.expand_path(File.dirname(__FILE__))
+SPECS_PATH = File.join(ROOT, 'specs/bin/Debug/specs.dll')
 
 task :default => 'specs'
 
 task :compile do
-  WINDOWS ? compile_msbuild : compile_xbuild
+  WINDOWS ? compile_with_msbuild : compile_with_xbuild
 end
 
-def compile_xbuild
+task :specs => :compile do
+  WINDOWS ? specs_with_dotnet : specs_with_mono
+end
+
+def compile_with_xbuild
   raise "Failed to compile with xbuild" unless \
     system '/usr/bin/xbuild DomainToolkit.sln /verbosity:minimal'
 end
 
-def compile_msbuild
+def compile_with_msbuild
   raise "Failed to compile with msbuild" unless \
     system 'C:\Windows\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe DomainToolkit.sln /verbosity:minimal'
 end
 
-task :specs => :compile do
-  system "mono --runtime=v4.0 #{MSPEC_PATH} -x ignore #{File.join(ROOT, 'specs/bin/Debug/specs.dll')}"
+def specs_with_mono
+  system "mono --runtime=v4.0 ./packages/Machine.Specifications.0.5.12/tools/mspec.exe -x ignore #{SPECS_PATH}"
+end
+
+def specs_with_dotnet
+  system ".\\packages\\Machine.Specifications.0.5.12\\tools\\mspec-clr4.exe -x ignore #{SPECS_PATH}"
 end
