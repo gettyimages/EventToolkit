@@ -1,6 +1,6 @@
 using System;
 
-namespace DomainToolkit
+namespace EventToolkit
 {
   public interface IEventSubscriber : IDisposable
   {

@@ -1,15 +1,13 @@
-using System;
-
-namespace DomainToolkit
+namespace EventToolkit
 {
-  public class Event<T> : IEventMessage {
-    readonly T message;
+  public class Event<TMessage> : IEventMessage {
+      readonly TMessage message;
 
-    public Event(T message) {
+    public Event(TMessage message) {
       this.message = message;
     }
 
-    public T Message {
+    public TMessage Message {
       get { return message; }
     }
   }

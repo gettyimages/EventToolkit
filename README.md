@@ -1,10 +1,10 @@
-# DomainToolkit
+# EventToolkit
 
-Succinct, dependency-free, ioc-friendly utilities for working with a domain-centric design paradigm.
+Succinct, dependency-free, ioc-friendly utilities for publishing / subscribing to events as messages within the application domain.
 
-## Domain Events
+## Events
 
-Domain Events aid decoupling and separation of concerns. 
+Events aid decoupling and separation of concerns. 
 
     public class Fee {
         public RecordPayment(amountPaid) {
@@ -24,10 +24,6 @@ Domain Events aid decoupling and separation of concerns.
 
         paidOffFee.ShouldEqual(fee);
     }
-
-## Repositories / Unit of Work
-
-*Incomplete...*
 
 ## Thanks
 

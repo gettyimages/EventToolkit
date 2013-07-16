@@ -1,7 +1,6 @@
-using System;
 using System.Collections.Generic;
 
-namespace DomainToolkit
+namespace EventToolkit
 {
   public interface IEventScopeContainer {
     ScopedEventBus CreateScope();
@@ -22,10 +21,10 @@ namespace DomainToolkit
         base.RemoveSubscription(subscription);
     }
 
-    protected override IEnumerable<IEventSubscription> GetSubscriptions<T>(T message)
+    protected override IEnumerable<IEventSubscription> GetSubscriptions<TMessage>(TMessage message)
     {
       lock (sync)
-        return base.GetSubscriptions<T>(message);
+        return base.GetSubscriptions(message);
     }
 
     public ScopedEventBus CreateScope() {

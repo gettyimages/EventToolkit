@@ -1,13 +1,13 @@
 using System;
+using EventToolkit;
 using Machine.Specifications;
-using DomainToolkit;
 
 namespace Specs
 {
   [Subject("Publishing")]
   public class When_publishing_an_event
   {
-    static bool notified = false;
+    static bool notified;
 
     Establish context = () => {
       EventBus.Subscribe<Message>(_ => notified = true);

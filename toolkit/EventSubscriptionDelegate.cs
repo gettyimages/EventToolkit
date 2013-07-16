@@ -1,14 +1,14 @@
 using System;
 
-namespace DomainToolkit
+namespace EventToolkit
 {
-  class EventSubscriptionDelegate<T> : IEventSubscription
-    where T : IEventMessage
+  class EventSubscriptionDelegate<TMessage> : IEventSubscription
+    where TMessage : IEventMessage
   {
-    readonly Action<T> handler;
+    readonly Action<TMessage> handler;
     readonly ScopedEventBus bus;
 
-    public EventSubscriptionDelegate(ScopedEventBus bus, Action<T> handler)
+    public EventSubscriptionDelegate(ScopedEventBus bus, Action<TMessage> handler)
     {
       if (handler == null)
         throw new ArgumentNullException("handler");
@@ -18,12 +18,12 @@ namespace DomainToolkit
     }
 
     public Type MessageType {
-      get { return typeof(T); }
+      get { return typeof(TMessage); }
     }
 
     public void Send(IEventMessage message)
     {
-      handler((T)message);
+      handler((TMessage)message);
     }
 
     public void Dispose() {

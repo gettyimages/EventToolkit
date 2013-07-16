@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DomainToolkit 
+namespace EventToolkit 
 {
   public class ScopedEventBus : IEventBus
   {
-    List<IEventSubscription> subscriptions = new List<IEventSubscription>();
-    GlobalEventBus outerBus;
+    readonly List<IEventSubscription> subscriptions = new List<IEventSubscription>();
+    readonly GlobalEventBus outerBus;
 
     public ScopedEventBus() {
     }
@@ -16,18 +16,18 @@ namespace DomainToolkit
       this.outerBus = outerBus;
     }
 
-    public IEventSubscription Subscribe<T>(Action<T> handler)
-      where T : IEventMessage
+    public IEventSubscription Subscribe<TMessage>(Action<TMessage> handler)
+      where TMessage : IEventMessage
     {
-      var subscription = new EventSubscriptionDelegate<T>(this, handler);
+      var subscription = new EventSubscriptionDelegate<TMessage>(this, handler);
       AddSubscription(subscription);
       return subscription;
     }
 
-    public IEventSubscription Subscribe<T>(IEventSubscriber subscriber)
-      where T : IEventMessage
+    public IEventSubscription Subscribe<TMessage>(IEventSubscriber subscriber)
+      where TMessage : IEventMessage
     {
-      var subscription = new EventSubscription(this, typeof(T), subscriber);
+      var subscription = new EventSubscription(this, typeof(TMessage), subscriber);
       AddSubscription(subscription);
       return subscription;
     }
@@ -36,8 +36,8 @@ namespace DomainToolkit
       RemoveSubscription(subscription);
     }
 
-    public void Publish<T>(T message)
-      where T : IEventMessage
+    public void Publish<TMessage>(TMessage message)
+      where TMessage : IEventMessage
     {
       foreach (var subscription in GetSubscriptions(message))
         subscription.Send(message);
@@ -49,12 +49,10 @@ namespace DomainToolkit
       subscriptions.Clear();
     }
 
-    protected virtual IEnumerable<IEventSubscription> GetSubscriptions<T>(T message)
-      where T : IEventMessage
+    protected virtual IEnumerable<IEventSubscription> GetSubscriptions<TMessage>(TMessage message)
+      where TMessage : IEventMessage
     {
-      return subscriptions.Where(s => {
-        return s.MessageType.IsAssignableFrom(message.GetType());
-      });
+      return subscriptions.Where(s => s.MessageType.IsInstanceOfType(message));
     }
 
     protected virtual void AddSubscription(IEventSubscription subscription) {

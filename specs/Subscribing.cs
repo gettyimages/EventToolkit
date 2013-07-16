@@ -1,6 +1,6 @@
 using System;
+using EventToolkit;
 using Machine.Specifications;
-using DomainToolkit;
 
 namespace Specs
 {
@@ -33,7 +33,7 @@ namespace Specs
     static Exception exception;
 
     Because of = () =>
-      exception = Catch.Exception(() => EventBus.Subscribe<Message>((Action<Message>)null));
+      exception = Catch.Exception(() => EventBus.Subscribe((Action<Message>)null));
 
     It should_reject_the_subscription = () =>
       exception.ShouldBeOfType(typeof(ArgumentNullException));

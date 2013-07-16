@@ -1,6 +1,4 @@
-using System;
-using Machine.Specifications;
-using DomainToolkit;
+using EventToolkit;
 
 namespace Specs
 {

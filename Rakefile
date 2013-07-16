@@ -17,12 +17,12 @@ end
 
 def compile_with_xbuild
   raise "Failed to compile with xbuild" unless \
-    system '/usr/bin/xbuild DomainToolkit.sln /verbosity:minimal'
+    system '/usr/bin/xbuild EventToolkit.sln /verbosity:minimal'
 end
 
 def compile_with_msbuild
   raise "Failed to compile with msbuild" unless \
-    system 'C:\Windows\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe DomainToolkit.sln /verbosity:minimal'
+    system 'C:\Windows\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe EventToolkit.sln /verbosity:minimal'
 end
 
 def specs_with_mono

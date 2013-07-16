@@ -1,6 +1,6 @@
 using System;
 
-namespace DomainToolkit
+namespace EventToolkit
 {
   public class EventBus
   {
@@ -12,22 +12,22 @@ namespace DomainToolkit
       }
     }
 
-    public static IEventSubscription Subscribe<T>(Action<T> handler)
-      where T : IEventMessage
+    public static IEventSubscription Subscribe<TMessage>(Action<TMessage> handler)
+      where TMessage : IEventMessage
     {
-      return Bus.Subscribe<T>(handler);
+      return Bus.Subscribe(handler);
     }
 
-    public static IEventSubscription Subscribe<T>(IEventSubscriber subscriber)
-      where T : IEventMessage
+    public static IEventSubscription Subscribe<TMessage>(IEventSubscriber subscriber)
+      where TMessage : IEventMessage
     {
-      return Bus.Subscribe<T>(subscriber);
+      return Bus.Subscribe<TMessage>(subscriber);
     }
 
-    public static void Publish<T>(T eventMessage)
-      where T : IEventMessage
+    public static void Publish<TMessage>(TMessage eventMessage)
+      where TMessage : IEventMessage
     {
-      Bus.Publish<T>(eventMessage);
+      Bus.Publish(eventMessage);
     }
 
     public static void Clear() {

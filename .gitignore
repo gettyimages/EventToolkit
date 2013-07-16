@@ -3,6 +3,7 @@
 *.user
 *.userprefs
 *.suo
+*.nupkg
 .DS_Store
 
 _ReSharper.*

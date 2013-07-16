@@ -1,8 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
-namespace DomainToolkit 
+namespace EventToolkit 
 {
   public interface IEventBus {
     IEventSubscription Subscribe<TMessage>(Action<TMessage> handler)

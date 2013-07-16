@@ -1,6 +1,4 @@
-using System;
-
-namespace DomainToolkit
+namespace EventToolkit
 {
   public abstract class Handles<TMessage> : IEventSubscriber
     where TMessage : IEventMessage {
