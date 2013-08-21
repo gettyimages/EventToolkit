@@ -10,6 +10,7 @@ _ReSharper.*
 *crunch*
 
 packages/
+.specs.xml
 
 !*.proj
 !*.config
