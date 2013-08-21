@@ -4,7 +4,7 @@ Succinct, dependency-free, ioc-friendly utilities for publishing / subscribing t
 
 ## Events
 
-Events aid decoupling and separation of concerns. 
+Events aid decoupling and separation of concerns.
 
     public class Fee {
         public RecordPayment(amountPaid) {
@@ -24,6 +24,20 @@ Events aid decoupling and separation of concerns.
 
         paidOffFee.ShouldEqual(fee);
     }
+
+Events raised within a *TransactionScope* will be raised once the transaction is completed, or lost if the transaction is cancelled.
+
+        EventBus.Subscribe<FeePaidOff>(e => Console.Log("Fee paid off"));
+
+        using (var trx = new TransactionScope()) {
+            EventBus.Publish<FeePaidOff>(new FeePaidOff { Fee = this });
+            Console.Log("Committing transaction...");
+            trx.Complete();
+        }
+
+        // prints:
+        // Comitting transaction...
+        // Fee paid off
 
 ## Thanks
 
