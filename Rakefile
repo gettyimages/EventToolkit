@@ -26,9 +26,9 @@ def compile_with_msbuild
 end
 
 def specs_with_mono
-  system "mono --runtime=v4.0 ./packages/Machine.Specifications.0.5.12/tools/mspec.exe -x ignore #{SPECS_PATH}"
+  system "mono --runtime=v4.0 ./packages/NUnit.Runners.2.6.0.12051/tools/nunit-console.exe #{SPECS_PATH} -nologo -xml=.specs.xml"
 end
 
 def specs_with_dotnet
-  system ".\\packages\\Machine.Specifications.0.5.12\\tools\\mspec-clr4.exe -x ignore #{SPECS_PATH}"
+  system ".\\packages\\NUnit.Runners.2.6.0.12051\\tools\\nunit-console.exe #{SPECS_PATH} -nologo -xml=.specs.xml"
 end
