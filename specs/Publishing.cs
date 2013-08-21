@@ -73,10 +73,16 @@ namespace Specs
             EventBus.Publish(new DerivedEventMessage());
         }
 
+
         [Then]
-        public void then_it_notifies_the_subscribers()
+        public void then_it_notifies_the_subscribers_of_the_base_type()
         {
             base_notification.Should().BeTrue();
+        }
+
+        [Then]
+        public void then_it_notifies_the_subscribers_of_the_derived_type()
+        {
             derived_notification.Should().BeTrue();
         }
     }
@@ -101,9 +107,14 @@ namespace Specs
         }
 
         [Then]
-        public void then_it_notifies_the_subscribers()
+        public void then_it_notifies_the_subscribers_of_the_base_type()
         {
             base_notification.Should().BeTrue();
+        }
+
+        [Then]
+        public void then_it_does_not_notify_the_subscribers_of_the_derived_type()
+        {
             derived_notification.Should().BeFalse();
         }
     }

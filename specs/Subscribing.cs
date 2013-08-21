@@ -17,7 +17,7 @@ namespace Specs
         }
 
         [Then]
-        public void then_it_notifies_the_subscribers()
+        public void then_it_creates_a_subscription()
         {
             subscription.Should().NotBeNull();
         }
@@ -35,7 +35,7 @@ namespace Specs
         }
 
         [Then]
-        public void then_it_notifies_the_subscribers()
+        public void then_it_creates_a_subscription()
         {
             subscription.Should().NotBeNull();
         }
@@ -53,7 +53,7 @@ namespace Specs
         }
 
         [Then]
-        public void then_it_notifies_the_subscribers()
+        public void then_it_rejects_the_subscription()
         {
             Catch<ArgumentNullException>();
         }
@@ -71,7 +71,7 @@ namespace Specs
         }
 
         [Then]
-        public void then_it_notifies_the_subscribers()
+        public void then_it_rejects_the_subscription()
         {
             Catch<ArgumentNullException>();
         }
@@ -96,7 +96,7 @@ namespace Specs
         }
 
         [Then]
-        public void then_it_notifies_the_subscribers()
+        public void then_it_does_not_receive_events()
         {
             EventBus.Publish(new EventMessage());
             notified.Should().BeFalse();
@@ -104,7 +104,7 @@ namespace Specs
     }
 
     [Scenario("Subscribing")]
-    public class When_a_subscriber_subscription_is_disposed : EventSpec
+    public class When_a_subscription_is_disposed : EventSpec
     {
         bool notified;
         SimpleSubscriber subscriber = new SimpleSubscriber();
@@ -123,7 +123,7 @@ namespace Specs
         }
 
         [Then]
-        public void then_it_notifies_the_subscribers()
+        public void then_it_disposes_the_subscribers()
         {
             subscriber.disposed.Should().BeTrue();
         }
