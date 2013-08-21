@@ -1,69 +1,110 @@
-using System;
 using EventToolkit;
-using Machine.Specifications;
+using Kekiri;
+using FluentAssertions;
 
 namespace Specs
 {
-  [Subject("Publishing")]
-  public class When_publishing_an_event
-  {
-    static bool notified;
+    [Scenario("Publishing")]
+    public class When_publishing_an_event : EventSpec
+    {
+        bool notified;
 
-    Establish context = () => {
-      EventBus.Subscribe<Message>(_ => notified = true);
-    };
+        [Given]
+        public void given()
+        {
+            EventBus.Subscribe<EventMessage>(_ => notified = true);
+        }
 
-    Because of = () => EventBus.Publish(new Message());
+        [When]
+        public void when()
+        {
+            EventBus.Publish(new EventMessage());
+        }
 
-    It should_notify_the_subscribers = () =>
-      notified.ShouldBeTrue();
-  }
+        [Then]
+        public void then_it_notifies_the_subscribers()
+        {
+            notified.Should().BeTrue();
+        }
+    }
 
-  [Subject("Publishing")]
-  public class When_publishing_an_event_with_multiple_subscribers {
-    static string notified = "";
+    [Scenario("Publishing")]
+    public class When_publishing_an_event_with_multiple_subscribers : EventSpec
+    {
+        string notified = string.Empty;
 
-    Establish context = () => {
-      EventBus.Subscribe<Message>(_ => notified += "a");
-      EventBus.Subscribe<Message>(_ => notified += "b");
-      EventBus.Subscribe<Message>(_ => notified += "c");
-    };
+        [Given]
+        public void given()
+        {
+            EventBus.Subscribe<EventMessage>(_ => notified += "a");
+            EventBus.Subscribe<EventMessage>(_ => notified += "b");
+            EventBus.Subscribe<EventMessage>(_ => notified += "c");
+        }
 
-    Because of = () => EventBus.Publish(new Message());
+        [When]
+        public void when()
+        {
+            EventBus.Publish(new EventMessage());
+        }
 
-    It should_notify_the_subscribers = () =>
-      notified.ShouldEqual("abc");
-  }
+        [Then]
+        public void then_it_notifies_the_subscribers()
+        {
+            notified.Should().Be("abc");
+        }
+    }
 
-  [Subject("Publishing")]
-  public class When_publishing_an_event_of_a_derived_type {
-    static bool base_notification;
-    static bool derived_notification;
+    [Scenario("Publishing")]
+    public class When_publishing_an_event_of_a_derived_type : EventSpec
+    {
+        bool base_notification;
+        bool derived_notification;
 
-    Establish context = () => {
-      EventBus.Subscribe<BaseEventMessage>(_ => base_notification = true);
-      EventBus.Subscribe<DerivedEventMessage>(_ => derived_notification = true);
-    };
+        [Given]
+        public void given()
+        {
+            EventBus.Subscribe<BaseEventMessage>(_ => base_notification = true);
+            EventBus.Subscribe<DerivedEventMessage>(_ => derived_notification = true);
+        }
 
-    Because of = () => EventBus.Publish(new DerivedEventMessage());
+        [When]
+        public void when()
+        {
+            EventBus.Publish(new DerivedEventMessage());
+        }
 
-    It should_notify_the_subscribers_of_the_base_type = () => base_notification.ShouldBeTrue();
-    It should_notify_the_subscribers_of_the_derived_type = () => derived_notification.ShouldBeTrue();
-  }
+        [Then]
+        public void then_it_notifies_the_subscribers()
+        {
+            base_notification.Should().BeTrue();
+            derived_notification.Should().BeTrue();
+        }
+    }
 
-  [Subject("Publishing")]
-  public class When_publishing_an_event_of_a_base_type {
-    static bool base_notification;
-    static bool derived_notification;
+    [Scenario("Publishing")]
+    public class When_publishing_an_event_of_a_base_type : EventSpec
+    {
+        bool base_notification;
+       bool derived_notification;
 
-    Establish context = () => {
-      EventBus.Subscribe<BaseEventMessage>(_ => base_notification = true);
-      EventBus.Subscribe<DerivedEventMessage>(_ => derived_notification = true);
-    };
+        [Given]
+        public void given()
+        {
+            EventBus.Subscribe<BaseEventMessage>(_ => base_notification = true);
+            EventBus.Subscribe<DerivedEventMessage>(_ => derived_notification = true);
+        }
 
-    Because of = () => EventBus.Publish(new BaseEventMessage());
+        [When]
+        public void when()
+        {
+            EventBus.Publish(new BaseEventMessage());
+        }
 
-    It should_notify_the_subscribers_of_the_base_type = () => base_notification.ShouldBeTrue();
-    It should_not_notify_the_subscribers_of_a_derived_type = () => derived_notification.ShouldBeFalse();
-  }
+        [Then]
+        public void then_it_notifies_the_subscribers()
+        {
+            base_notification.Should().BeTrue();
+            derived_notification.Should().BeFalse();
+        }
+    }
 }
