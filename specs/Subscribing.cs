@@ -1,86 +1,131 @@
 using System;
 using EventToolkit;
-using Machine.Specifications;
+using Kekiri;
+using FluentAssertions;
 
 namespace Specs
 {
-  [Subject("Subscribing")]
-  public class When_subscribing_to_an_event_with_a_delegate
-  {
-    static IEventSubscription subscription;
+    [Scenario("Subscribing")]
+    public class When_subscribing_to_an_event_with_a_delegate : EventSpec
+    {
+        IEventSubscription subscription;
 
-    Because of = () =>
-      subscription = EventBus.Subscribe<Message>(_ => {});
+        [When]
+        public void when()
+        {
+            subscription = EventBus.Subscribe<EventMessage>(_ => { });
+        }
 
-    It should_return_a_subscription = () =>
-      subscription.ShouldNotBeNull();
-  }
+        [Then]
+        public void then_it_notifies_the_subscribers()
+        {
+            subscription.Should().NotBeNull();
+        }
+    }
 
+    [Scenario("Subscribing")]
+    public class When_subscribing_to_an_event_with_a_subscriber : EventSpec
+    {
+        IEventSubscription subscription;
 
-  [Subject("Subscribing")]
-  public class When_subscribing_to_an_event_with_a_subscriber {
-    static IEventSubscription subscription;
+        [When]
+        public void when()
+        {
+            subscription = EventBus.Subscribe<EventMessage>(new SimpleSubscriber());
+        }
 
-    Because of = () =>
-      subscription = EventBus.Subscribe<Message>(new SimpleSubscriber());
+        [Then]
+        public void then_it_notifies_the_subscribers()
+        {
+            subscription.Should().NotBeNull();
+        }
+    }
 
-    It should_return_a_subscription = () =>
-      subscription.ShouldNotBeNull();
-  }
+    [Scenario("Subscribing")]
+    public class When_subscribing_to_an_event_with_a_null_delegate_reference : EventSpec
+    {
+        Exception exception;
 
-  [Subject("Subscribing")]
-  public class When_subscribing_to_an_event_with_a_null_delegate_reference {
-    static Exception exception;
+        [When, Throws]
+        public void when()
+        {
+            EventBus.Subscribe((Action<EventMessage>)null);
+        }
 
-    Because of = () =>
-      exception = Catch.Exception(() => EventBus.Subscribe((Action<Message>)null));
+        [Then]
+        public void then_it_notifies_the_subscribers()
+        {
+            Catch<ArgumentNullException>();
+        }
+    }
 
-    It should_reject_the_subscription = () =>
-      exception.ShouldBeOfType(typeof(ArgumentNullException));
-  }
+    [Scenario("Subscribing")]
+    public class When_subscribing_to_an_event_with_a_null_subscriber_reference : EventSpec
+    {
+        Exception exception;
 
-  [Subject("Subscribing")]
-  public class When_subscribing_to_an_event_with_a_null_subscriber_reference {
-    static Exception exception;
+        [When, Throws]
+        public void when()
+        {
+            EventBus.Subscribe<EventMessage>((IEventSubscriber)null);
+        }
 
-    Because of = () =>
-      exception = Catch.Exception(() => EventBus.Subscribe<Message>((IEventSubscriber)null));
+        [Then]
+        public void then_it_notifies_the_subscribers()
+        {
+            Catch<ArgumentNullException>();
+        }
+    }
 
-    It should_reject_the_subscription = () =>
-      exception.ShouldBeOfType(typeof(ArgumentNullException));
-  }
+    [Scenario("Subscribing")]
+    public class When_a_delegate_subscription_is_disposed : EventSpec
+    {
+        bool notified;
+        IEventSubscription subscription;
 
-  [Subject("Subscribing")]
-  public class When_a_delegate_subscription_is_disposed {
-    static bool notified;
-    static IEventSubscription subscription;
+        [Given]
+        public void given()
+        {
+            subscription = EventBus.Subscribe<EventMessage>(_ => notified = true);
+        }
 
-    Establish context = () =>
-      subscription = EventBus.Subscribe<Message>(_ => notified = true);
+        [When]
+        public void when()
+        {
+            subscription.Dispose();
+        }
 
-    Because of = () =>
-      subscription.Dispose();
+        [Then]
+        public void then_it_notifies_the_subscribers()
+        {
+            EventBus.Publish(new EventMessage());
+            notified.Should().BeFalse();
+        }
+    }
 
-    It should_not_recieve_events = () => {
-      EventBus.Publish(new Message());
-      notified.ShouldBeFalse();
-    };
-  }
+    [Scenario("Subscribing")]
+    public class When_a_subscriber_subscription_is_disposed : EventSpec
+    {
+        bool notified;
+        SimpleSubscriber subscriber = new SimpleSubscriber();
+        IEventSubscription subscription;
 
-  [Subject("Subscribing")]
-  public class When_a_subscriber_subscription_is_disposed {
-    static bool notified;
-    static SimpleSubscriber subscriber = new SimpleSubscriber();
-    static IEventSubscription subscription;
+        [Given]
+        public void given()
+        {
+            subscription = EventBus.Subscribe<EventMessage>(subscriber);
+        }
 
-    Establish context = () =>
-      subscription = EventBus.Subscribe<Message>(subscriber);
+        [When]
+        public void when()
+        {
+            subscription.Dispose();
+        }
 
-    Because of = () =>
-      subscription.Dispose();
-
-    It should_dispose_the_subscriber = () => {
-      subscriber.disposed.ShouldBeTrue();
-    };
-  }
+        [Then]
+        public void then_it_notifies_the_subscribers()
+        {
+            subscriber.disposed.Should().BeTrue();
+        }
+    }
 }
