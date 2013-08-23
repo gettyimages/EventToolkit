@@ -3,11 +3,10 @@
   <metadata>
     <id>EventToolkit</id>
     <version>1.1</version>
-    <authors>dylan</authors>
-    <owners>dylan</owners>
-    <licenseUrl>http://LICENSE_URL_HERE_OR_DELETE_THIS_LINE</licenseUrl>
-    <projectUrl>http://PROJECT_URL_HERE_OR_DELETE_THIS_LINE</projectUrl>
-    <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>
+    <authors>dylanmei</authors>
+    <owners>dylanmei</owners>
+    <licenseUrl>http://github.com/dylanmei/EventToolkit/blob/master/LICENSE</licenseUrl>
+    <projectUrl>http://github.com/dylanmei/EventToolkit</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Succinct, dependency-free, ioc-friendly utilities for publishing / subscribing to events as messages within the application domain.</description>
     <releaseNotes>Initial cut.</releaseNotes>
