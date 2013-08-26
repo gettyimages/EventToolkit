@@ -45,6 +45,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Monitoring.cs" />
     <Compile Include="Publishing.cs" />
     <Compile Include="Scopes.cs" />
     <Compile Include="EventSpec.cs" />

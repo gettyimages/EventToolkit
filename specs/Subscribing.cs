@@ -42,6 +42,24 @@ namespace Specs
     }
 
     [Scenario("Subscribing")]
+    public class When_subscribing_to_the_current_event_bus : EventSpec
+    {
+        IEventSubscription subscription;
+
+        [When]
+        public void when()
+        {
+            subscription = EventBus.Current.Subscribe<EventMessage>(_ => { });
+        }
+
+        [Then]
+        public void then_it_creates_a_subscription()
+        {
+            subscription.Should().NotBeNull();
+        }
+    }
+
+    [Scenario("Subscribing")]
     public class When_subscribing_to_an_event_with_a_null_delegate_reference : EventSpec
     {
         Exception exception;

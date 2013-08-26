@@ -5,7 +5,7 @@ using FluentAssertions;
 namespace Specs
 {
     [Scenario("Scopes")]
-    public class When_publishing_an_event_to_local_and_application_scopes : EventSpec
+    public class When_publishing_an_event_to_local_and_global_scopes : EventSpec
     {
         protected SimpleSubscriber localSubscriber = new SimpleSubscriber();
         protected SimpleSubscriber globalSubscriber = new SimpleSubscriber();
@@ -13,7 +13,7 @@ namespace Specs
         [Given]
         public void given_a_global_subscription()
         {
-            EventBus.Subscribe<EventMessage>(globalSubscriber, SubscriptionScope.Application);
+            EventMonitor.Monitor<EventMessage>(globalSubscriber);
         }
 
         [Given]

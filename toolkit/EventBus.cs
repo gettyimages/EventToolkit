@@ -16,20 +16,16 @@ namespace EventToolkit
             get { return Bus; }
         }
 
-        public static IEventSubscription Subscribe<TMessage>(Action<TMessage> handler,
-            SubscriptionScope scope = SubscriptionScope.Instance)
+        public static IEventSubscription Subscribe<TMessage>(Action<TMessage> handler)
           where TMessage : IEventMessage
         {
-            return scope == SubscriptionScope.Instance ?
-                Bus.Subscribe(handler) : EventCore.Monitor(handler);
+            return Bus.Subscribe(handler);
         }
 
-        public static IEventSubscription Subscribe<TMessage>(IEventSubscriber subscriber,
-            SubscriptionScope scope = SubscriptionScope.Instance)
+        public static IEventSubscription Subscribe<TMessage>(IEventSubscriber subscriber)
           where TMessage : IEventMessage
         {
-            return scope == SubscriptionScope.Instance ?
-                Bus.Subscribe<TMessage>(subscriber) : EventCore.Monitor<TMessage>(subscriber);
+            return Bus.Subscribe<TMessage>(subscriber);
         }
 
         public static void Publish<TMessage>(TMessage eventMessage)

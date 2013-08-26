@@ -35,7 +35,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EventCore.cs" />
-    <Compile Include="SubscriptionScope.cs" />
+    <Compile Include="EventMonitor.cs" />
     <Compile Include="IEventMonitor.cs" />
     <Compile Include="TransactionNotification.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
