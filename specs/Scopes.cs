@@ -5,43 +5,39 @@ using FluentAssertions;
 namespace Specs
 {
     [Scenario("Scopes")]
-    public class When_raising_an_event_at_the_local_scope : EventSpec
+    public class When_publishing_an_event_to_local_and_application_scopes : EventSpec
     {
-        protected ScopedEventBus localBus;
-        protected GlobalEventBus globalBus;
-        protected SimpleSubscriber nestedSubscriber = new SimpleSubscriber();
-        protected SimpleSubscriber outerSubscriber = new SimpleSubscriber();
+        protected SimpleSubscriber localSubscriber = new SimpleSubscriber();
+        protected SimpleSubscriber globalSubscriber = new SimpleSubscriber();
 
         [Given]
-        public void given_a_handler_subscribed_at_an_outer_scope()
+        public void given_a_global_subscription()
         {
-            globalBus = new GlobalEventBus();
-            globalBus.Subscribe<EventMessage>(outerSubscriber);
+            EventBus.Subscribe<EventMessage>(globalSubscriber, SubscriptionScope.Application);
         }
 
         [Given]
-        public void given_a_handler_subscribed_at_the_local_scope()
+        public void given_a_local_subscription()
         {
-            localBus = globalBus.CreateScope();
-            localBus.Subscribe<EventMessage>(nestedSubscriber);
+            EventBus.Subscribe<EventMessage>(localSubscriber);
         }
 
         [When]
         public void when()
         {
-            localBus.Publish(new EventMessage());
+            EventBus.Publish(new EventMessage());
         }
 
         [Then]
-        public void it_sends_an_event_to_handlers_at_the_nested_scope()
+        public void it_sends_an_event_to_handlers_at_the_local_scope()
         {
-            nestedSubscriber.handled.Should().BeTrue();
+            localSubscriber.handled.Should().BeTrue();
         }
 
         [Then]
-        public void it_sends_an_event_to_handlers_at_the_outer_scope()
+        public void it_sends_an_event_to_handlers_at_the_application_scope()
         {
-            outerSubscriber.handled.Should().BeTrue();
+            globalSubscriber.handled.Should().BeTrue();
         }
     }
 }

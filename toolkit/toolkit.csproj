@@ -34,6 +34,9 @@
     <Reference Include="System.Transactions" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EventCore.cs" />
+    <Compile Include="SubscriptionScope.cs" />
+    <Compile Include="IEventMonitor.cs" />
     <Compile Include="TransactionNotification.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IEventMessage.cs" />

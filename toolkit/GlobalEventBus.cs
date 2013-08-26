@@ -1,35 +1,39 @@
+using System;
 using System.Collections.Generic;
 
 namespace EventToolkit
 {
-  public interface IEventScopeContainer {
-    ScopedEventBus CreateScope();
-  }
-
-  public class GlobalEventBus : ScopedEventBus, IEventScopeContainer
-  {
-    static object sync = new object();
-
-    protected override void AddSubscription(IEventSubscription subscription)
+    class GlobalEventBus : ScopedEventBus, IEventMonitor
     {
-      lock (sync)
-        base.AddSubscription(subscription);
-    }
+        static readonly object sync = new object();
 
-    protected override void RemoveSubscription(IEventSubscription subscription) {
-      lock (sync)
-        base.RemoveSubscription(subscription);
-    }
+        protected override void AddSubscription(IEventSubscription subscription)
+        {
+            lock (sync)
+                base.AddSubscription(subscription);
+        }
 
-    protected override IEnumerable<IEventSubscription> GetSubscriptions<TMessage>(TMessage message)
-    {
-      lock (sync)
-        return base.GetSubscriptions(message);
-    }
+        protected override void RemoveSubscription(IEventSubscription subscription)
+        {
+            lock (sync)
+                base.RemoveSubscription(subscription);
+        }
 
-    public ScopedEventBus CreateScope() {
-      return new ScopedEventBus(this);
+        protected override IEnumerable<IEventSubscription> GetSubscriptions<TMessage>(TMessage message)
+        {
+            lock (sync)
+                return base.GetSubscriptions(message);
+        }
+
+        IEventSubscription IEventMonitor.Monitor<TMessage>(Action<TMessage> handler)
+        {
+            return Subscribe(handler);
+        }
+
+        IEventSubscription IEventMonitor.Monitor<TMessage>(IEventSubscriber subscriber)
+        {
+            return Subscribe<TMessage>(subscriber);
+        }
     }
-  }
 }
 

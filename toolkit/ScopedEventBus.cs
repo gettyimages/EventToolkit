@@ -9,7 +9,7 @@ namespace EventToolkit
         readonly List<IEventSubscription> subscriptions = new List<IEventSubscription>();
         readonly GlobalEventBus outerBus;
 
-        public ScopedEventBus()
+        internal ScopedEventBus()
         {
         }
 
