@@ -5,39 +5,39 @@ namespace EventToolkit
 {
     public interface IEventSubscription : IDisposable
     {
-        Type MessageType { get; }
-        void Send(IEventMessage message);
+        Type EventType { get; }
+        void Send(IEvent eventMessage);
     }
 
     class EventSubscription : IEventSubscription
     {
-        readonly Type messageType;
+        readonly Type eventType;
         readonly ScopedEventBus bus;
         readonly IEventSubscriber subscriber;
 
-        public EventSubscription(ScopedEventBus bus, Type messageType, IEventSubscriber subscriber)
+        public EventSubscription(ScopedEventBus bus, Type eventType, IEventSubscriber subscriber)
         {
             if (subscriber == null)
                 throw new ArgumentNullException("subscriber");
 
             this.bus = bus;
-            this.messageType = messageType;
+            this.eventType = eventType;
             this.subscriber = subscriber;
         }
 
-        public Type MessageType {
-            get{ return messageType; }
+        public Type EventType {
+            get{ return eventType; }
         }
 
-        public void Send(IEventMessage message)
+        public void Send(IEvent eventMessage)
         {
             if (Transaction.Current == null)
-                subscriber.Handle(message);
+                subscriber.Handle(eventMessage);
             else
             {
                 Transaction.Current
                     .EnlistVolatile(new TransactionNotification(() =>
-                        subscriber.Handle(message)), EnlistmentOptions.None);
+                        subscriber.Handle(eventMessage)), EnlistmentOptions.None);
             }
         }
 

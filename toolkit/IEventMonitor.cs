@@ -3,10 +3,10 @@ using System;
 namespace EventToolkit
 {
     public interface IEventMonitor {
-        IEventSubscription Monitor<TMessage>(Action<TMessage> handler)
-            where TMessage : IEventMessage;
+        IEventSubscription Monitor<TEvent>(Action<TEvent> handler)
+            where TEvent : IEvent;
 
-        IEventSubscription Monitor<TMessage>(IEventSubscriber subscriber)
-            where TMessage : IEventMessage;
+        IEventSubscription Monitor<TEvent>(IEventSubscriber subscriber)
+            where TEvent : IEvent;
     }
 }

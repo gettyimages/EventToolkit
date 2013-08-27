@@ -12,13 +12,13 @@ namespace Specs
         [Given]
         public void given()
         {
-            EventBus.Subscribe<EventMessage>(_ => notified = true);
+            EventBus.Subscribe<Event>(_ => notified = true);
         }
 
         [When]
         public void when()
         {
-            EventBus.Publish(new EventMessage());
+            EventBus.Publish(new Event());
         }
 
         [Then]
@@ -36,15 +36,15 @@ namespace Specs
         [Given]
         public void given()
         {
-            EventBus.Subscribe<EventMessage>(_ => notified += "a");
-            EventBus.Subscribe<EventMessage>(_ => notified += "b");
-            EventBus.Subscribe<EventMessage>(_ => notified += "c");
+            EventBus.Subscribe<Event>(_ => notified += "a");
+            EventBus.Subscribe<Event>(_ => notified += "b");
+            EventBus.Subscribe<Event>(_ => notified += "c");
         }
 
         [When]
         public void when()
         {
-            EventBus.Publish(new EventMessage());
+            EventBus.Publish(new Event());
         }
 
         [Then]
@@ -63,14 +63,14 @@ namespace Specs
         [Given]
         public void given()
         {
-            EventBus.Subscribe<BaseEventMessage>(_ => base_notification = true);
-            EventBus.Subscribe<DerivedEventMessage>(_ => derived_notification = true);
+            EventBus.Subscribe<BaseEvent>(_ => base_notification = true);
+            EventBus.Subscribe<DerivedEvent>(_ => derived_notification = true);
         }
 
         [When]
         public void when()
         {
-            EventBus.Publish(new DerivedEventMessage());
+            EventBus.Publish(new DerivedEvent());
         }
 
 
@@ -96,14 +96,14 @@ namespace Specs
         [Given]
         public void given()
         {
-            EventBus.Subscribe<BaseEventMessage>(_ => base_notification = true);
-            EventBus.Subscribe<DerivedEventMessage>(_ => derived_notification = true);
+            EventBus.Subscribe<BaseEvent>(_ => base_notification = true);
+            EventBus.Subscribe<DerivedEvent>(_ => derived_notification = true);
         }
 
         [When]
         public void when()
         {
-            EventBus.Publish(new BaseEventMessage());
+            EventBus.Publish(new BaseEvent());
         }
 
         [Then]

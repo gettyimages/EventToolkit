@@ -3,13 +3,13 @@ using System.Transactions;
 
 namespace EventToolkit
 {
-    class EventSubscriptionDelegate<TMessage> : IEventSubscription
-      where TMessage : IEventMessage
+    class EventSubscriptionDelegate<TEvent> : IEventSubscription
+      where TEvent : IEvent
     {
-        readonly Action<TMessage> handler;
+        readonly Action<TEvent> handler;
         readonly ScopedEventBus bus;
 
-        public EventSubscriptionDelegate(ScopedEventBus bus, Action<TMessage> handler)
+        public EventSubscriptionDelegate(ScopedEventBus bus, Action<TEvent> handler)
         {
             if (handler == null)
                 throw new ArgumentNullException("handler");
@@ -18,20 +18,20 @@ namespace EventToolkit
             this.handler = handler;
         }
 
-        public Type MessageType
+        public Type EventType
         {
-            get { return typeof(TMessage); }
+            get { return typeof(TEvent); }
         }
 
-        public void Send(IEventMessage message)
+        public void Send(IEvent eventMessage)
         {
             if (Transaction.Current == null)
-                handler((TMessage)message);
+                handler((TEvent)eventMessage);
             else
             {
                 Transaction.Current
                     .EnlistVolatile(new TransactionNotification(() =>
-                        handler((TMessage)message)), EnlistmentOptions.None);
+                        handler((TEvent)eventMessage)), EnlistmentOptions.None);
             }
         }
 

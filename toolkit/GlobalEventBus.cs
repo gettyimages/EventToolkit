@@ -19,20 +19,20 @@ namespace EventToolkit
                 base.RemoveSubscription(subscription);
         }
 
-        protected override IEnumerable<IEventSubscription> GetSubscriptions<TMessage>(TMessage message)
+        protected override IEnumerable<IEventSubscription> GetSubscriptions<TEvent>(TEvent eventMessage)
         {
             lock (sync)
-                return base.GetSubscriptions(message);
+                return base.GetSubscriptions(eventMessage);
         }
 
-        IEventSubscription IEventMonitor.Monitor<TMessage>(Action<TMessage> handler)
+        IEventSubscription IEventMonitor.Monitor<TEvent>(Action<TEvent> handler)
         {
             return Subscribe(handler);
         }
 
-        IEventSubscription IEventMonitor.Monitor<TMessage>(IEventSubscriber subscriber)
+        IEventSubscription IEventMonitor.Monitor<TEvent>(IEventSubscriber subscriber)
         {
-            return Subscribe<TMessage>(subscriber);
+            return Subscribe<TEvent>(subscriber);
         }
     }
 }

@@ -13,19 +13,19 @@ namespace Specs
         [Given]
         public void given_a_global_subscription()
         {
-            EventMonitor.Monitor<EventMessage>(globalSubscriber);
+            EventMonitor.Monitor<Event>(globalSubscriber);
         }
 
         [Given]
         public void given_a_local_subscription()
         {
-            EventBus.Subscribe<EventMessage>(localSubscriber);
+            EventBus.Subscribe<Event>(localSubscriber);
         }
 
         [When]
         public void when()
         {
-            EventBus.Publish(new EventMessage());
+            EventBus.Publish(new Event());
         }
 
         [Then]

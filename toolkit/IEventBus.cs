@@ -4,13 +4,13 @@ namespace EventToolkit
 {
     public interface IEventBus
     {
-        void Publish<TMessage>(TMessage message)
-          where TMessage : IEventMessage;
+        void Publish<TEvent>(TEvent eventMessage)
+          where TEvent : IEvent;
 
-        IEventSubscription Subscribe<TMessage>(Action<TMessage> handler)
-            where TMessage : IEventMessage;
+        IEventSubscription Subscribe<TEvent>(Action<TEvent> handler)
+            where TEvent : IEvent;
 
-        IEventSubscription Subscribe<TMessage>(IEventSubscriber subscriber)
-            where TMessage : IEventMessage;
+        IEventSubscription Subscribe<TEvent>(IEventSubscriber subscriber)
+            where TEvent : IEvent;
     }
 }

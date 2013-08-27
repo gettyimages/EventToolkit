@@ -8,16 +8,16 @@ namespace EventToolkit
             get { return EventCore.CoreBus; }
         }
 
-        public static IEventSubscription Monitor<TMessage>(Action<TMessage> handler)
-            where TMessage : IEventMessage
+        public static IEventSubscription Monitor<TEvent>(Action<TEvent> handler)
+            where TEvent : IEvent
         {
             return Current.Monitor(handler);
         }
 
-        public static IEventSubscription Monitor<TMessage>(IEventSubscriber subscriber)
-            where TMessage : IEventMessage
+        public static IEventSubscription Monitor<TEvent>(IEventSubscriber subscriber)
+            where TEvent : IEvent
         {
-            return Current.Monitor<TMessage>(subscriber);
+            return Current.Monitor<TEvent>(subscriber);
         }
     }
 }

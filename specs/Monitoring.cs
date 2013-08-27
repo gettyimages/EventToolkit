@@ -12,7 +12,7 @@ namespace Specs
         [When]
         public void when()
         {
-            subscription = EventMonitor.Monitor<EventMessage>(_ => { });
+            subscription = EventMonitor.Monitor<Event>(_ => { });
         }
 
         [Then]
@@ -30,7 +30,7 @@ namespace Specs
         [When]
         public void when()
         {
-            subscription = EventMonitor.Monitor<EventMessage>(new SimpleSubscriber());
+            subscription = EventMonitor.Monitor<Event>(new SimpleSubscriber());
         }
 
         [Then]

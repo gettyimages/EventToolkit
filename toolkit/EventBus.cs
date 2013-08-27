@@ -16,20 +16,20 @@ namespace EventToolkit
             get { return Bus; }
         }
 
-        public static IEventSubscription Subscribe<TMessage>(Action<TMessage> handler)
-          where TMessage : IEventMessage
+        public static IEventSubscription Subscribe<TEvent>(Action<TEvent> handler)
+          where TEvent : IEvent
         {
             return Bus.Subscribe(handler);
         }
 
-        public static IEventSubscription Subscribe<TMessage>(IEventSubscriber subscriber)
-          where TMessage : IEventMessage
+        public static IEventSubscription Subscribe<TEvent>(IEventSubscriber subscriber)
+          where TEvent : IEvent
         {
-            return Bus.Subscribe<TMessage>(subscriber);
+            return Bus.Subscribe<TEvent>(subscriber);
         }
 
-        public static void Publish<TMessage>(TMessage eventMessage)
-          where TMessage : IEventMessage
+        public static void Publish<TEvent>(TEvent eventMessage)
+          where TEvent : IEvent
         {
             Bus.Publish(eventMessage);
         }

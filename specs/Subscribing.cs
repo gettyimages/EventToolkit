@@ -13,7 +13,7 @@ namespace Specs
         [When]
         public void when()
         {
-            subscription = EventBus.Subscribe<EventMessage>(_ => { });
+            subscription = EventBus.Subscribe<Event>(_ => { });
         }
 
         [Then]
@@ -31,7 +31,7 @@ namespace Specs
         [When]
         public void when()
         {
-            subscription = EventBus.Subscribe<EventMessage>(new SimpleSubscriber());
+            subscription = EventBus.Subscribe<Event>(new SimpleSubscriber());
         }
 
         [Then]
@@ -49,7 +49,7 @@ namespace Specs
         [When]
         public void when()
         {
-            subscription = EventBus.Current.Subscribe<EventMessage>(_ => { });
+            subscription = EventBus.Current.Subscribe<Event>(_ => { });
         }
 
         [Then]
@@ -67,7 +67,7 @@ namespace Specs
         [When, Throws]
         public void when()
         {
-            EventBus.Subscribe((Action<EventMessage>)null);
+            EventBus.Subscribe((Action<Event>)null);
         }
 
         [Then]
@@ -85,7 +85,7 @@ namespace Specs
         [When, Throws]
         public void when()
         {
-            EventBus.Subscribe<EventMessage>((IEventSubscriber)null);
+            EventBus.Subscribe<Event>((IEventSubscriber)null);
         }
 
         [Then]
@@ -104,7 +104,7 @@ namespace Specs
         [Given]
         public void given()
         {
-            subscription = EventBus.Subscribe<EventMessage>(_ => notified = true);
+            subscription = EventBus.Subscribe<Event>(_ => notified = true);
         }
 
         [When]
@@ -116,7 +116,7 @@ namespace Specs
         [Then]
         public void then_it_does_not_receive_events()
         {
-            EventBus.Publish(new EventMessage());
+            EventBus.Publish(new Event());
             notified.Should().BeFalse();
         }
     }
@@ -131,7 +131,7 @@ namespace Specs
         [Given]
         public void given()
         {
-            subscription = EventBus.Subscribe<EventMessage>(subscriber);
+            subscription = EventBus.Subscribe<Event>(subscriber);
         }
 
         [When]

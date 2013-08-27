@@ -2,24 +2,24 @@ using EventToolkit;
 
 namespace Specs
 {
-    public class EventMessage : IEventMessage
+    public class Event : IEvent
     {
     }
 
-    public class BaseEventMessage : IEventMessage
+    public class BaseEvent : IEvent
     {
     }
 
-    public class DerivedEventMessage : BaseEventMessage
+    public class DerivedEvent : BaseEvent
     {
     }
 
-    public class SimpleSubscriber : Handles<EventMessage>
+    public class SimpleSubscriber : Handles<Event>
     {
         public bool handled = false;
         public bool disposed = false;
 
-        protected override void Handle(EventMessage message)
+        protected override void Handle(Event eventMessage)
         {
             handled = true;
         }

@@ -21,13 +21,13 @@ namespace Specs
         [Given]
         public void given_an_event_subscription()
         {
-            EventBus.Subscribe<EventMessage>(_ => notified = true);
+            EventBus.Subscribe<Event>(_ => notified = true);
         }
 
         [Given]
         public void given_an_event_is_published()
         {
-            EventBus.Publish(new EventMessage());
+            EventBus.Publish(new Event());
         }
 
         [Given]
@@ -64,13 +64,13 @@ namespace Specs
         [Given]
         public void given_an_event_subscription()
         {
-            EventBus.Subscribe<EventMessage>(_ => notified = true);
+            EventBus.Subscribe<Event>(_ => notified = true);
         }
 
         [Given]
         public void given_an_event_is_published()
         {
-            EventBus.Publish(new EventMessage());
+            EventBus.Publish(new Event());
         }
 
 //        [Given]
@@ -107,19 +107,19 @@ namespace Specs
         [Given]
         public void given_an_unsafe_event_subscription()
         {
-            EventBus.Subscribe<EventMessage>(_ => { throw new StackOverflowException(); });
+            EventBus.Subscribe<Event>(_ => { throw new StackOverflowException(); });
         }
 
         [Given]
         public void given_a_safe_event_subscription()
         {
-            EventBus.Subscribe<EventMessage>(_ => notified = true);
+            EventBus.Subscribe<Event>(_ => notified = true);
         }
 
         [Given]
         public void given_an_event_is_published()
         {
-            EventBus.Publish(new EventMessage());
+            EventBus.Publish(new Event());
         }
 
         [Given]

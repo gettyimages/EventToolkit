@@ -1,17 +1,17 @@
 namespace EventToolkit
 {
-    public abstract class Handles<TMessage> : IEventSubscriber
-      where TMessage : IEventMessage
+    public abstract class Handles<TEvent> : IEventSubscriber
+      where TEvent : IEvent
     {
         public virtual void Dispose()
         {
         }
 
-        protected abstract void Handle(TMessage message);
+        protected abstract void Handle(TEvent eventMessage);
 
-        void IEventSubscriber.Handle(IEventMessage message)
+        void IEventSubscriber.Handle(IEvent eventMessage)
         {
-            Handle((TMessage)message);
+            Handle((TEvent)eventMessage);
         }
     }
 }
