@@ -25,9 +25,25 @@ Events aid decoupling and separation of concerns.
         paidOffFee.ShouldEqual(fee);
     }
 
+Moving non-essential code such as logging into event handlers can isolate your core domain from infrastructure concerns.
+
+    public class CustomerMakesPurchaseHandler : Handles<OrderPaid> {
+        readonly ILogger logger;
+
+        public CustomerMakesPurchaseHandler(ILogger logger) {
+            this.logger = logger;
+        }
+
+        protected override void Handle(OrderPaid message) {
+            logger.Log(message);
+        }
+    }
+
+## Transactions
+
 Events raised within a *TransactionScope* will be raised once the transaction is completed, or lost if the transaction is cancelled.
 
-        EventBus.Subscribe<FeePaidOff>(e => Console.Log("Fee paid off"));
+        EventBus.Subscribe<FeePaidOff>(e => Console.Log("Fee paid off!"));
 
         using (var trx = new TransactionScope()) {
             EventBus.Publish<FeePaidOff>(new FeePaidOff { Fee = this });
@@ -37,7 +53,7 @@ Events raised within a *TransactionScope* will be raised once the transaction is
 
         // prints:
         // Comitting transaction...
-        // Fee paid off
+        // Fee paid off!
 
 ## Thanks
 
