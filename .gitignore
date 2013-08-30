@@ -9,6 +9,7 @@
 _ReSharper.*
 *crunch*
 
+.pack/
 packages/
 .specs.xml
 

@@ -1,6 +1,6 @@
 # EventToolkit
 
-Succinct, dependency-free, ioc-friendly utilities for publishing / subscribing to events as messages within the application domain.
+Succinct, dependency-free, ioc-friendly utilities for publishing / subscribing to events within the application domain.
 
 ## Events
 
