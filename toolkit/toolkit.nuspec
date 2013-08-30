@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>EventToolkit</id>
-    <version>1.1</version>
+    <version>1.0</version>
     <authors>dylanmei</authors>
     <owners>dylanmei</owners>
     <licenseUrl>http://github.com/dylanmei/EventToolkit/blob/master/LICENSE</licenseUrl>
@@ -11,7 +11,7 @@
     <description>Succinct, dependency-free, ioc-friendly utilities for publishing / subscribing to events within the application domain.</description>
     <summary>Publish/Subscribe to events within the application domain.</summary>
     <copyright>Copyright 2013</copyright>
-    <tags>event</tags>
+    <tags>events toolkit framework publish subscribe domain-events</tags>
     <releaseNotes>Initial cut.</releaseNotes>
   </metadata>
 </package>
