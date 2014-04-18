@@ -28,6 +28,11 @@ namespace EventToolkit
             return Bus.Subscribe<TEvent>(subscriber);
         }
 
+        public static IEventSubscription Subscribe(Type eventType, IEventSubscriber subscriber)
+        {
+            return Bus.Subscribe(eventType, subscriber);
+        }
+
         public static void Publish<TEvent>(TEvent eventMessage)
           where TEvent : IEvent
         {

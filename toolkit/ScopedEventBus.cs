@@ -29,7 +29,12 @@ namespace EventToolkit
         public IEventSubscription Subscribe<TEvent>(IEventSubscriber subscriber)
           where TEvent : IEvent
         {
-            var subscription = new EventSubscription(this, typeof(TEvent), subscriber);
+            return Subscribe(typeof (TEvent), subscriber);
+        }
+
+        public IEventSubscription Subscribe(Type eventType, IEventSubscriber subscriber)
+        {
+            var subscription = new EventSubscription(this, eventType, subscriber);
             AddSubscription(subscription);
             return subscription;
         }
