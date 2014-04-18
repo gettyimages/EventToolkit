@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>EventToolkit</id>
-    <version>1.0</version>
+    <version>1.0.1</version>
     <authors>dylanmei</authors>
     <owners>dylanmei</owners>
     <licenseUrl>http://github.com/dylanmei/EventToolkit/blob/master/LICENSE</licenseUrl>
