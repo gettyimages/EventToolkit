@@ -3,15 +3,15 @@
   <metadata>
     <id>EventToolkit</id>
     <version>1.0.1</version>
-    <authors>dylanmei</authors>
-    <owners>dylanmei</owners>
-    <licenseUrl>http://github.com/dylanmei/EventToolkit/blob/master/LICENSE</licenseUrl>
-    <projectUrl>http://github.com/dylanmei/EventToolkit</projectUrl>
+    <authors>gettyimages</authors>
+    <owners>gettyimages</owners>
+    <licenseUrl>http://github.com/gettyimages/EventToolkit/blob/master/LICENSE</licenseUrl>
+    <projectUrl>http://github.com/gettyimages/EventToolkit</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Succinct, dependency-free, ioc-friendly utilities for publishing / subscribing to events within the application domain.</description>
     <summary>Publish/Subscribe to events within the application domain.</summary>
-    <copyright>Copyright 2013</copyright>
+    <copyright>Copyright 2013-2014</copyright>
     <tags>events toolkit framework publish subscribe domain-events</tags>
-    <releaseNotes>Initial cut.</releaseNotes>
+    <releaseNotes></releaseNotes>
   </metadata>
 </package>
